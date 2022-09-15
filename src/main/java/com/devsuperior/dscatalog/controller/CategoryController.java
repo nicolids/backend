@@ -30,9 +30,18 @@ public class CategoryController {
         return ResponseEntity.ok().body(dto);
     }
 
-    @PostMapping()
+    @PostMapping("/add")
     public ResponseEntity<CategoryDto> insert(@RequestBody CategoryDto dto){
         dto = categoryService.insert(dto);
+        URI uri= ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
+    }
+
+    @PutMapping(value = "/update/{id}")
+    public ResponseEntity<CategoryDto> update(@PathVariable Long id, @RequestBody CategoryDto dto){
+        dto = categoryService.update(dto);
         URI uri= ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();

@@ -1,6 +1,6 @@
 package com.devsuperior.dscatalog.controller.exeptions;
 
-import com.devsuperior.dscatalog.services.exeptions.EntityNotFoundException;
+import com.devsuperior.dscatalog.services.exeptions.ServiceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,8 +13,8 @@ import java.time.Instant;
 public class ControllerAdviceHandler {
 
 
-    @ExceptionHandler(EntityNotFoundException.class) // argumento para saber que tipo de exceção ele trata.
-    public ResponseEntity<StandardError> entityNotFound(EntityNotFoundException e, HttpServletRequest request){
+    @ExceptionHandler(ServiceNotFoundException.class) // argumento para saber que tipo de exceção ele trata.
+    public ResponseEntity<StandardError> entityNotFound(ServiceNotFoundException e, HttpServletRequest request){
         StandardError err = new StandardError();
         err.setTimeStamp(Instant.now());
         err.setStatus(HttpStatus.NOT_FOUND.value());
