@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -19,6 +20,7 @@ public class CategoryService {
     @Transactional(readOnly = true) //garante a integridade da comunicação com o banco
     public List<CategoryDto> findAll(){
         List<Category> list = categoryRepository.findAll();
-        List<CategoryDto> dtoList = list.stream()
+//        List<CategoryDto> dtoList = list.stream().map(x -> new CategoryDto(x)).collect(Collectors.toList());
+        return list.stream().map(x -> new CategoryDto(x)).collect(Collectors.toList());
     }
 }
