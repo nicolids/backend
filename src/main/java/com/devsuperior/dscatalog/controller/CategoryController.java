@@ -39,9 +39,9 @@ public class CategoryController {
         return ResponseEntity.created(uri).body(dto);
     }
 
-    @PutMapping(value = "/update/{id}")
+    @PutMapping(value = "/update/{id}") //método não idempotente
     public ResponseEntity<CategoryDto> update(@PathVariable Long id, @RequestBody CategoryDto dto){
-        dto = categoryService.update(dto);
+        dto = categoryService.update(id,dto);
         URI uri= ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
