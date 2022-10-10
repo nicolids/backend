@@ -1,11 +1,12 @@
 package com.devsuperior.dscatalog.entities;
 
 import javax.persistence.*;
-import java.io.Serializable; //para ser convertido em sequência de bites
+import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
 @Entity
-@Table(name= "tb_category")
+@Table(name = "tb_category")
 public class Category implements Serializable {
 
     @Id
@@ -13,7 +14,13 @@ public class Category implements Serializable {
     private Long id;
     private String nome;
 
-    public Category(){
+    //para especificar que é sem time zone só no padrão UTC
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant createdAt;
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant updateAt;
+
+    public Category() {
 
     }
 
@@ -36,6 +43,23 @@ public class Category implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public Instant getUpdateAt() {
+        return updateAt;
+    }
+
+    @PrePersist
+    public void prePersist(){
+        createdAt = Instant.now();
+    }
+    @PreUpdate
+    public void preUpdate(){
+        updateAt = Instant.now();
     }
 
     @Override
